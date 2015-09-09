@@ -9,8 +9,6 @@ module.exports = function(grunt) {
       // Define our source and build folders
       base_path: '',
 
-      proxy_url:    'local.site_novo',
-
       build:        '_public',
       css_build:    '_public/css',
       js_build:     '_public/js',
@@ -19,6 +17,7 @@ module.exports = function(grunt) {
       css_src:      '_source/css',
       js_src:       '_source/js',
       vendor_src:   '_source/vendors',
+      bower_src:    'bower_components',
 
 
 
@@ -55,6 +54,9 @@ module.exports = function(grunt) {
 
 
       watch: {
+          options: {
+            livereload: true
+          },
 
           css: {
             files: ['<%= css_src %>/*.less','<%= css_src %>/**/*'],
@@ -67,8 +69,8 @@ module.exports = function(grunt) {
           },
 
           php: {
-            files: ['<%= build %>/*.php', '<%= build %>/**/*.php'],
-            tasks: ['php'],
+            files: ['<%= build %>/*.html', '<%= build %>/**/*.html'],
+            //tasks: ['php'],
           },
 
           build: {
@@ -109,23 +111,26 @@ module.exports = function(grunt) {
           options:{
             separator: ';'
           },
+
           basic_and_extras: {
-            files: {
-              '<%= js_build %>/app.js' : ['<%= js_src %>/*.js'],
-              //'<%= vendor_build %>/vendor.js' : ['<%= vendor_src %>/*.js', '<%= vendor_src %>/**/*.js'],
-            },
+            src: [
+              // JS
+              //'<%= js_src %>/controllers/*.js',
+              '<%= js_src %>/*.js'
+            ],
+            dest: '<%= js_build %>/app.js',
           },
 
           vendor: {
             src: [
               // Vendor Plugins
-              'bower_components/jquery/dist/jquery.js', // jQuery
-              // 'bower_components/vide/dist/jquery.vide.js',
-              // 'bower_components/jquery-tubular/dist/js/jquery-tubular.min.js',
-              // 'bower_components/modernizr/modernizr.js',
-              // 'bower_components/fastclick/lib/fastclick.js',
-              // 'bower_components/jquery.countdown/dist/jquery.countdown.js',
-              // 'bower_components/featherlight/release/featherlight.min.js',
+              //'<%= bower_src %>/jquery/dist/jquery.js', // jQuery
+              // '<%= bower_src %>/vide/dist/jquery.vide.js',
+              // '<%= bower_src %>/jquery-tubular/dist/js/jquery-tubular.min.js',
+              // '<%= bower_src %>/modernizr/modernizr.js',
+              // '<%= bower_src %>/fastclick/lib/fastclick.js',
+              // '<%= bower_src %>/jquery.countdown/dist/jquery.countdown.js',
+              // '<%= bower_src %>/featherlight/release/featherlight.min.js',
               // 'custom_components/ghost/ghost.js',
             ],
             dest: '<%= js_build %>/vendor.js',
@@ -154,35 +159,22 @@ module.exports = function(grunt) {
       },
 
 
-      // Task: BrowserSync
-      // ---------------------------------
-      browserSync: {
-        dev: {
-            options: {
-                proxy: '<%= proxy_url %>',
-                files: [
-                  '<%= build %>/css/*.css',
-                  '<%= build %>/js/*.js',
-                  '<%= build %>/**/*.jpg',
-                  '<%= build %>/**/*.png',
-                  '<%= build %>/**/*.svg',
-                  '<%= build %>/*.php',
-                  '<%= build %>/**/*.php',
-                ],
-                watchTask: true,
-                ghostMode: {
-                  clicks: true,
-                  scroll: true,
-                  links: true,
-                  forms: true
-                }
-            }
-        }
-    }
+      // Tarefa connect
+      connect: {
+          server: {
+              options: {
+                  port: 9000,
+                  base: "_public/",
+                  hostname: "localhost",
+                  livereload: true,
+                  open: true
+              }
+          }
+      }
 
     });
 
-    grunt.registerTask( 'w', ['browserSync','watch'] );
+    grunt.registerTask( 'w', ['connect','watch'] );
     grunt.registerTask('css', ['less','cmq','cssmin']);
     grunt.registerTask('js', ['jshint', 'concat', 'uglify']);
 
