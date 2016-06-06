@@ -6,8 +6,9 @@ module.exports = function(grunt) {
      pkg: grunt.file.readJSON('package.json'),
 
 
+
       // Define our source and build folders
-      base_path: '',
+      proxy_url:    'local.init',
 
       build:        '_public',
       css_build:    '_public/css',
@@ -17,7 +18,6 @@ module.exports = function(grunt) {
       css_src:      '_source/css',
       js_src:       '_source/js',
       vendor_src:   '_source/vendors',
-
 
       meta: {
         css : {
@@ -52,10 +52,6 @@ module.exports = function(grunt) {
 
 
       watch: {
-          options: {
-            livereload: true
-          },
-
           css: {
             files: ['<%= css_src %>/*.less','<%= css_src %>/**/*'],
             tasks: ['css'],
@@ -63,7 +59,7 @@ module.exports = function(grunt) {
 
           js: {
             files: ['<%= js_src %>/*.js', '<%= js_src %>/**/*.js', '<%= vendor_src %>/*.js', '<%= vendor_src %>/**/*.js'],
-            tasks: ['js'],
+            tasks: ['jshint', 'concat:basic_and_extras', 'uglify:build'],
           },
 
           html: {
@@ -73,7 +69,7 @@ module.exports = function(grunt) {
 
           build: {
             files: ['Gruntfile.js'],
-            tasks: ['concat', 'uglify'],
+            tasks: ['concat:vendor', 'uglify:vendor'],
           }
 
       },
@@ -166,16 +162,40 @@ module.exports = function(grunt) {
 
 
       // Tarefa connect
-      connect: {
-          server: {
-              options: {
-                  port: 9000,
-                  base: "_public/",
-                  hostname: "localhost",
-                  livereload: true,
-                  open: true
-              }
+      // connect: {
+      //     server: {
+      //         options: {
+      //             port: 9000,
+      //             base: "_public/",
+      //             hostname: "localhost",
+      //             livereload: true,
+      //             open: true
+      //         }
+      //     }
+      // }
+
+      browserSync: {
+        dev: {
+          options: {
+            proxy: '<%= proxy_url %>',
+            files : [
+              '<%= build %>/css/*.css',
+              '<%= build %>/js/*.js',
+              '<%= build %>/**/*.jpg',
+              '<%= build %>/**/*.png',
+              '<%= build %>/**/*.svg',
+              '<%= build %>/**/*.html',
+              '<%= build %>/**/*.php'
+            ],
+            watchTask: true,
+            ghostMode: {
+              clicks: true,
+              scroll: true,
+              links: true,
+              forms: true
+            }
           }
+        }
       }
 
     });
