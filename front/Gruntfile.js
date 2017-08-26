@@ -69,7 +69,7 @@ module.exports = function(grunt) {
 
           build: {
             files: ['Gruntfile.js'],
-            tasks: ['concat:vendor', 'uglify:vendor'],
+            tasks: ['concat','uglify'],
           }
 
       },
@@ -89,17 +89,17 @@ module.exports = function(grunt) {
 
 
       uglify: {
-          options: {
-            banner: '<%= meta.js.banner %>\n',
-            mangle: false
-          },
-           build: {
-            files: {
-               '<%= js_build %>/app.min.js': ['<%= js_build %>/app.js'],
-               '<%= js_build %>/vendor.min.js': ['<%= js_build %>/vendor.js'],
-            },
+        options: {
+          banner: '<%= meta.js.banner %>\n',
+          mangle: false
+        },
+         build: {
+          files: {
+             '<%= js_build %>/app.min.js': ['<%= js_build %>/app.js'],
+             '<%= js_build %>/vendor.min.js': ['<%= js_build %>/vendor.js'],
           },
         },
+      },
 
       concat: {
           options:{
@@ -117,25 +117,19 @@ module.exports = function(grunt) {
           vendor: {
             src: [
               // Vendor Plugins
-              '<%= vendor_build %>/jquery/dist/jquery.js', // jQuery
-              // '<%= vendor_build %>/slick-carousel/slick/slick.js', // slick
-              // '<%= vendor_build %>/vide/dist/jquery.vide.js',
-              // '<%= vendor_build %>/jquery-tubular/dist/js/jquery-tubular.min.js',
-              // '<%= vendor_build %>/modernizr/modernizr.js',
-              // '<%= vendor_build %>/fastclick/lib/fastclick.js',
-              // '<%= vendor_build %>/jquery.countdown/dist/jquery.countdown.js',
-              // '<%= vendor_build %>/featherlight/release/featherlight.min.js',
+              '<%= vendor_src %>/bower_components/jquery/dist/jquery.js', // jQuery
+              // '<%= vendor_src %>/bower_components/bootstrap/dist/js/bootstrap.js', // bootstrap
+              // '<%= vendor_src %>/bower_components/slick-carousel/slick/slick.js', // slick
+              // '<%= vendor_src %>/bower_components/bootstrap-select/dist/js/bootstrap-select.js', // bootstrap-select
+              // '<%= vendor_src %>/vide/dist/jquery.vide.js',
+              // '<%= vendor_src %>/jquery-tubular/dist/js/jquery-tubular.min.js',
+              // '<%= vendor_src %>/modernizr/modernizr.js',
+              // '<%= vendor_src %>/fastclick/lib/fastclick.js',
+              // '<%= vendor_src %>/jquery.countdown/dist/jquery.countdown.js',
+              // '<%= vendor_src %>/featherlight/release/featherlight.min.js',
             ],
             dest: '<%= js_build %>/vendor.js',
           },
-      },
-
-      // CSS Concat
-      concat_css: {
-        options: {},
-        files: {
-          // '<%= css_build %>/vendor.css': [ '<%= vendor_build %>/slick-carousel/slick/slick.css' ],
-        },
       },
 
       // CSSmin Config
@@ -146,7 +140,7 @@ module.exports = function(grunt) {
           },
           compress: {
             files: {
-              '<%= css_build %>/vendor.min.css': [ '<%= css_build %>/vendor.css' ],
+              // '<%= css_build %>/vendor.min.css': [ '<%= css_build %>/vendor.css' ],
               '<%= css_build %>/app.min.css': [ '<%= css_build %>/app.css' ],
             }
           }
@@ -159,20 +153,6 @@ module.exports = function(grunt) {
           }
         }
       },
-
-
-      // Tarefa connect
-      // connect: {
-      //     server: {
-      //         options: {
-      //             port: 9000,
-      //             base: "_public/",
-      //             hostname: "localhost",
-      //             livereload: true,
-      //             open: true
-      //         }
-      //     }
-      // }
 
       browserSync: {
         dev: {
@@ -200,11 +180,11 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask( 'w', ['connect','watch'] );
+    grunt.registerTask( 'w', ['browserSync','watch'] );
     grunt.registerTask('css', ['less','cmq','cssmin']);
     grunt.registerTask('js', ['jshint', 'concat', 'uglify']);
 
-    grunt.registerTask('default', ['connect', 'watch', 'less', 'cmq', 'concat_css', 'cssmin', 'jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['connect', 'watch', 'less', 'cmq', 'cssmin', 'jshint', 'concat', 'uglify']);
 
 
 };
