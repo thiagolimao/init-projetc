@@ -5,17 +5,24 @@
   "site": "www.thiagolima.com",
   "version": "0.1.0",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-browser-sync": "^2.2.0",
+    "fs-extra": "^4.0.1",
+    "grunt": "^1.0.3",
     "grunt-combine-media-queries": "~1.0.18",
-    "grunt-concat-css": "~0.3.1",
+    "grunt-concat-css": "~0.3.2",
     "grunt-contrib-concat": "~0.5.0",
-    "grunt-contrib-connect": "~0.11.2",
-    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-cssmin": "~3.0.0",
     "grunt-contrib-jshint": "~1.1.0",
-    "grunt-contrib-less": "~0.11.4",
-    "grunt-contrib-uglify": "~0.6.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "load-grunt-tasks": "^3.3.0"
+    "grunt-contrib-less": "^2.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^3.0.1",
+    "load-grunt-tasks": "^3.3.0",
+    "minimatch": "^3.0.2",
+    "node-sass": "^4.9.3"
+  },
+  "dependencies": {
+    "uuid": "^3.3.2"
   }
 }

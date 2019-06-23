@@ -5,11 +5,7 @@ module.exports = function(grunt) {
 
      pkg: grunt.file.readJSON('package.json'),
 
-
-
       // Define our source and build folders
-      proxy_url:    'local.init',
-
       build:        '_public',
       css_build:    '_public/css',
       js_build:     '_public/js',
@@ -45,15 +41,24 @@ module.exports = function(grunt) {
       },
 
 
-      // Less Config
-      less: {
-        '<%= css_build %>/app.css': '<%= css_src %>/application.less'
+      // Sass Config
+      sass: {
+
+        dist: {
+          files: {
+            '<%= css_build %>/app.css': '<%= css_src %>/application.scss',
+          }
+        }
+
       },
 
 
       watch: {
+          options: {
+              livereload: true
+          },
           css: {
-            files: ['<%= css_src %>/*.less','<%= css_src %>/**/*'],
+            files: ['<%= css_src %>/*.scss','<%= css_src %>/**/*'],
             tasks: ['css'],
           },
 
@@ -117,16 +122,12 @@ module.exports = function(grunt) {
           vendor: {
             src: [
               // Vendor Plugins
-              '<%= vendor_src %>/bower_components/jquery/dist/jquery.js', // jQuery
-              // '<%= vendor_src %>/bower_components/bootstrap/dist/js/bootstrap.js', // bootstrap
-              // '<%= vendor_src %>/bower_components/slick-carousel/slick/slick.js', // slick
-              // '<%= vendor_src %>/bower_components/bootstrap-select/dist/js/bootstrap-select.js', // bootstrap-select
-              // '<%= vendor_src %>/vide/dist/jquery.vide.js',
-              // '<%= vendor_src %>/jquery-tubular/dist/js/jquery-tubular.min.js',
-              // '<%= vendor_src %>/modernizr/modernizr.js',
-              // '<%= vendor_src %>/fastclick/lib/fastclick.js',
-              // '<%= vendor_src %>/jquery.countdown/dist/jquery.countdown.js',
-              // '<%= vendor_src %>/featherlight/release/featherlight.min.js',
+              // '<%= vendor_src %>/js/jquery.min.js', //jQuery
+              // '<%= vendor_src %>/js/jquery.scrolly.min.js', //jQuery scrolly
+              // '<%= vendor_src %>/js/browser.min.js', //browser
+              // '<%= vendor_src %>/js/breakpoints.min.js', //breakpoints
+              // '<%= vendor_src %>/js/slick.min.js', //Slick SLider
+              // '<%= vendor_src %>/js/util.js', //util
             ],
             dest: '<%= js_build %>/vendor.js',
           },
@@ -154,37 +155,30 @@ module.exports = function(grunt) {
         }
       },
 
-      browserSync: {
-        dev: {
-          options: {
-            proxy: '<%= proxy_url %>',
-            files : [
-              '<%= build %>/css/*.css',
-              '<%= build %>/js/*.js',
-              '<%= build %>/**/*.jpg',
-              '<%= build %>/**/*.png',
-              '<%= build %>/**/*.svg',
-              '<%= build %>/**/*.html',
-              '<%= build %>/**/*.php'
-            ],
-            watchTask: true,
-            ghostMode: {
-              clicks: true,
-              scroll: true,
-              links: true,
-              forms: true
-            }
+      connect: {
+          server: {
+              options: {
+                  port: 9000,
+                  base: ".",
+                  hostname: "localhost",
+                  livereload: true,
+                  open: true
+              }
           }
-        }
       }
 
     });
 
-    grunt.registerTask( 'w', ['browserSync','watch'] );
-    grunt.registerTask('css', ['less','cmq','cssmin']);
+    // Carregando os plugins
+    // ---------------------------------------
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+
+    grunt.registerTask( 'w', ['connect','watch'] );
+    grunt.registerTask('css', ['sass','cmq','cssmin']);
     grunt.registerTask('js', ['jshint', 'concat', 'uglify']);
 
-    grunt.registerTask('default', ['connect', 'watch', 'less', 'cmq', 'cssmin', 'jshint', 'concat', 'uglify']);
-
+    grunt.registerTask('default', ['connect', 'watch', 'sass', 'cmq', 'cssmin', 'jshint', 'concat', 'uglify']);
 
 };
