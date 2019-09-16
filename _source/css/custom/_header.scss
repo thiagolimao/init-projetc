@@ -1,0 +1,54 @@
+// HEADER
+header
+{
+	h1, h2, h3, h4, h5, h6, p
+	{
+		color: _palette(light-color);
+	}
+}
+#wrapper>section.intro>
+{
+	header
+	{
+		>*
+		{
+			text-align: center;
+		}
+
+		h1+p
+		{
+			font-size: .75rem;
+			line-height: 2;
+			text-transform: none;
+			font-family: _font(family);
+
+			span
+			{
+				color: _palette(primary-color);
+			}
+		}
+	}
+}
+
+ul.items,
+ul.icons
+{
+	>li
+	{
+		>h3,>a,>span
+		{
+			color: _palette(light-color);
+		}
+	}
+}
+
+
+#wrapper>section>header:before,
+#wrapper>section:last-of-type>header:after,
+#wrapper>section>header h1:before,
+#wrapper>section>header h2:before,
+#wrapper>section>header h1:after,
+#wrapper>section>header h2:after
+{
+	background-color: _palette(primary-color);
+}

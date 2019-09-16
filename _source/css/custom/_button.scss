@@ -1,0 +1,12 @@
+// BUTTON
+.button,
+button,
+input[type=button],
+input[type=reset],
+input[type=submit]
+{
+	&.primary
+	{
+		color: _palette(primary-color) !important;
+	}
+}

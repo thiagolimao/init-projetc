@@ -1,0 +1,50 @@
+// SLIDER
+
+.testimonial
+{
+	text-align: center;
+
+	p
+	{
+		&:last-child
+		{
+			margin-bottom: 0;
+		}
+	    margin: 0 0 .2rem 0;
+	}
+}
+
+.slick-next,
+.slick-prev
+{
+	box-shadow: none;
+	&:hover
+	{
+		box-shadow: none;
+	}
+
+	&:before
+	{
+	    font-family: FontAwesome;
+	    font-size: 35px;
+	    line-height: 1;
+	    color: rgba(0,0,0,.20);
+	    opacity: .75;
+	}
+}
+
+.slick-prev {
+    left: -50px;
+    &:before
+	{
+		content: "\f053";
+	}
+}
+
+.slick-next {
+    right: -50px;
+    &:before
+	{
+		content: "\f054";
+	}
+}

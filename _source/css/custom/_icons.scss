@@ -1,0 +1,75 @@
+// ICONS
+.title-icons
+{
+	margin: (_size(element-margin) * 1.25) 0 0 -4.5rem;
+	padding: 1.1rem 0 0 4.5rem;
+	position: relative;
+
+	&:first-child
+	{
+		margin-top: 0;
+	}
+
+	&.icon_prev
+	{
+		&:before
+		{
+			content: "";
+
+		}
+		&:after
+		{
+			width: 3.25rem;
+			height: 3.25rem;
+			display: block;
+			content: "";
+			top: 0;
+			left: 0;
+			position: absolute;
+			background-image: url('../img/icon_prev.png');
+			background-size: 60%;
+			background-repeat: no-repeat;
+			background-position: center;
+
+		}
+	}
+
+	&:before {
+		background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512"><path d="M256,0l221.7,128v256L256,512L34.3,384V128L256,0z" fill="#{_palette(border-bg)}" /></svg>');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		color: _palette(fg-bold);
+		display: block;
+		font-size: 1.25rem;
+		height: 3.25rem;
+		left: 0;
+		line-height: 3.25rem;
+		position: absolute;
+		text-align: center;
+		top: 0;
+		width: 3.25rem;
+		text-indent: 0.1rem;
+	}
+}
+
+.content-icons
+{
+	padding-left: 4.5rem;
+
+	.title-icons:first-child
+	{
+		margin-top: 0;
+	}
+
+	.list-title
+	{
+		margin-bottom: 0;
+	}
+
+	ul li
+	{
+		padding-left: 0;
+		font-size: .9rem;
+	}
+}
